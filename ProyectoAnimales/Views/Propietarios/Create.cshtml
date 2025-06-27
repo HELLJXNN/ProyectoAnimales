@@ -1,49 +1,73 @@
 ﻿@model ProyectoAnimales.Models.Propietario
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Nuevo Propietario"; // More descriptive title
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<div class="container-fluid mt-4">
+    @* Add container for better spacing and responsiveness *@
+    <div class="card shadow-sm">
+        @* Use a card for a clean, contained form *@
+        <div class="card-header bg-success text-white">
+            @* Header with success background and white text *@
+            <h1 class="card-title text-center mb-0"><i class="bi bi-person-plus"></i> Crear Nuevo Propietario</h1> @* Centered title with icon *@
+        </div>
+        <div class="card-body">
+            <h4 class="card-subtitle mb-3 text-muted text-center">Ingresa los datos del nuevo propietario</h4> @* Subtitle for clarity *@
+            <hr class="my-4" /> @* Horizontal rule for separation *@
+            <div class="row justify-content-center">
+                @* Center the form column *@
+                <div class="col-md-6">
+                    @* Adjust column width for better form layout *@
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3" role="alert"></div> @* Use Bootstrap alert for validation summary *@
 
-<h4>Propietario</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+                        <div class="mb-3">
+                            @* Use mb-3 for consistent margin-bottom for form groups *@
+                            <label asp-for="Nombre" class="form-label"></label> @* Use form-label for Bootstrap 5 label style *@
+                            <input asp-for="Nombre" class="form-control" /> @* form-control for input styling *@
+                            <span asp-validation-for="Nombre" class="text-danger mt-1 d-block"></span> @* d-block to make validation message take full width *@
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Apellido" class="form-label"></label>
+                            <input asp-for="Apellido" class="form-control" />
+                            <span asp-validation-for="Apellido" class="text-danger mt-1 d-block"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Ciudad" class="form-label"></label>
+                            <input asp-for="Ciudad" class="form-control" />
+                            <span asp-validation-for="Ciudad" class="text-danger mt-1 d-block"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Telefono" class="form-label"></label>
+                            <input asp-for="Telefono" class="form-control" />
+                            <span asp-validation-for="Telefono" class="text-danger mt-1 d-block"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            @* Use d-grid and gap-2 for stacked buttons *@
+                            <button type="submit" value="Create" class="btn btn-primary btn-lg">
+                                @* Primary button for create, larger size *@
+                                <i class="bi bi-person-plus-fill"></i> Crear Propietario
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Apellido" class="control-label"></label>
-                <input asp-for="Apellido" class="form-control" />
-                <span asp-validation-for="Apellido" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Ciudad" class="control-label"></label>
-                <input asp-for="Ciudad" class="form-control" />
-                <span asp-validation-for="Ciudad" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Telefono" class="control-label"></label>
-                <input asp-for="Telefono" class="form-control" />
-                <span asp-validation-for="Telefono" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+        <div class="card-footer text-center bg-light">
+            @* Footer for card, light background *@
+            <a asp-action="Index" class="btn btn-outline-secondary btn-sm">
+                @* Outline button for back link *@
+                <i class="bi bi-arrow-left-circle"></i> Volver a la Lista
+            </a>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

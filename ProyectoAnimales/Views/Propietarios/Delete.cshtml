@@ -1,46 +1,69 @@
 ﻿@model ProyectoAnimales.Models.Propietario
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Confirmar Eliminación de Propietario"; // More descriptive title
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
+<div class="container-fluid mt-4">
+    @* Add container for better spacing and responsiveness *@
+    <div class="card shadow-sm border-danger">
+        @* Use a card with a danger border to emphasize the action *@
+        <div class="card-header bg-danger text-white">
+            @* Header with danger background and white text *@
+            <h1 class="card-title text-center mb-0"><i class="bi bi-person-x"></i> Eliminar Propietario</h1> @* Centered title with appropriate icon *@
+        </div>
+        <div class="card-body">
+            <h3 class="text-center text-danger mb-4">¿Estás seguro de que quieres eliminar este registro?</h3> @* Prominent confirmation message *@
+            <p class="text-center text-muted">Esta acción es irreversible y eliminará los datos de **@Model.Nombre @Model.Apellido**.</p> @* Additional warning with owner's name *@
+            <hr class="my-4" /> @* Horizontal rule for separation *@
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Propietario</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Apellido)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Apellido)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ciudad)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ciudad)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Telefono)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Telefono)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="PropietarioId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+            <h4 class="mb-3 text-center">Detalles del Propietario</h4> @* Subtitle for details *@
+            <dl class="row dl-horizontal">
+                @* Use dl-horizontal for Bootstrap's description list styling *@
+                <dt class="col-sm-3 text-end">
+                    @* Align labels to the right for better readability *@
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Nombre)
+                </dd>
+
+                <dt class="col-sm-3 text-end">
+                    @Html.DisplayNameFor(model => model.Apellido)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Apellido)
+                </dd>
+
+                <dt class="col-sm-3 text-end">
+                    @Html.DisplayNameFor(model => model.Ciudad)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Ciudad)
+                </dd>
+
+                <dt class="col-sm-3 text-end">
+                    @Html.DisplayNameFor(model => model.Telefono)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Telefono)
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer text-center bg-light d-flex justify-content-center gap-3">
+            @* Footer for card, light background, centered buttons with gap *@
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="PropietarioId" />
+                <button type="submit" class="btn btn-danger btn-lg">
+                    @* Prominent danger button for deletion *@
+                    <i class="bi bi-trash"></i> Confirmar Eliminación
+                </button>
+            </form>
+            <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                @* Outline button for back link, larger for consistency *@
+                <i class="bi bi-arrow-left-circle"></i> Cancelar y Volver a la Lista
+            </a>
+        </div>
+    </div>
 </div>

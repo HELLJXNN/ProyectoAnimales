@@ -5,107 +5,144 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table" id="example">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Especie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Edad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Propietario)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Especie)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Edad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Propietario.PropietarioId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.AnimalId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AnimalId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AnimalId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container-fluid mt-4">
+    @* Added container for better spacing *@
+    <div class="card shadow-sm">
+        @* Added card for a clean, contained look *@
+        <div class="card-header bg-white">
+            @* Light header for the card *@
+            <h1 class="card-title text-center mb-0">Listado de Animales</h1> @* Centered title with margin bottom reset *@
+        </div>
+        <div class="card-body">
+            <p class="mb-3">
+                @* Margin bottom for spacing *@
+                <a asp-action="Create" class="btn btn-primary btn-sm">
+                    @* Bootstrap button styles *@
+                    <i class="bi bi-plus-circle"></i> Crear Nuevo
+                </a>
+            </p>
+            <div class="table-responsive">
+                @* Ensures table is responsive on smaller screens *@
+                <table class="table table-hover table-striped table-bordered w-100" id="example">
+                    @* Added table-hover, table-striped, table-bordered and w-100 for full width *@
+                    <thead class="bg-light">
+                        @* Light background for table header *@
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Especie)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Edad)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Propietario)
+                            </th>
+                            <th class="text-center">Acciones</th> @* Centered actions column *@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Especie)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Edad)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Propietario.PropietarioId)
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        @* Group buttons for consistent sizing *@
+                                        <a asp-action="Edit" asp-route-id="@item.AnimalId" class="btn btn-outline-info" title="Editar">
+                                            <i class="bi bi-pencil-square"></i>Editar
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@item.AnimalId" class="btn btn-outline-secondary" title="Detalles">
+                                            <i class="bi bi-info-circle"></i>Ver
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.AnimalId" class="btn btn-outline-danger" title="Eliminar">
+                                            <i class="bi bi-trash"></i>Eliminar
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
+    $(document).ready(function () { // Use jQuery's document ready for DataTables initialization
         new DataTable('#example', {
-        layout: {
-            topStart: {
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print', 'colvis']
+            layout: {
+                topStart: {
+                    buttons: [
+                        {
+                            extend: 'copy',
+                            text: '<i class="fa-solid fa-copy"></i> Copiar', // Icon added
+                            className: 'btn btn-outline-secondary btn-sm', // Bootstrap button classes
+                            exportOptions: {
+                                columns: ':not(:last-child)' // Exclude the last column
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            text: '<i class="fa-solid fa-download"></i> Exportar CSV', // Icon added
+                            className: 'btn btn-outline-secondary btn-sm',
+                            exportOptions: {
+                                columns: ':not(:last-child)' // Exclude the last column
+                            }
+                        },
+                        {
+                            extend: 'excel',
+                            text: '<i class="fa-solid fa-file-excel"></i> Exportar Excel', // Icon added
+                            className: 'btn btn-outline-secondary btn-sm',
+                            exportOptions: {
+                                columns: ':not(:last-child)' // Exclude the last column
+                            }
+                        },
+                        {
+                            extend: 'pdf',
+                            text: '<i class="fa-solid fa-file-pdf"></i> Exportar PDF', // Icon added
+                            className: 'btn btn-outline-secondary btn-sm',
+                            exportOptions: {
+                                columns: ':not(:last-child)' // Exclude the last column
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class="fa-solid fa-print"></i> Imprimir', // Icon added
+                            className: 'btn btn-outline-secondary btn-sm',
+                            exportOptions: {
+                                columns: ':not(:last-child)' // Exclude the last column
+                            }
+                        },
+                        {
+                            extend: 'colvis',
+                            text: '<i class="fa-solid fa-filter"></i> Columnas', // Icon added
+                            className: 'btn btn-outline-secondary btn-sm'
+                        }
+                    ]
+                }
+            },
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json',
+            },
+            scrollX: true,
+            initComplete: function (json, settings) {
+                // No need for custom button class manipulation if using standard Bootstrap classes
             }
-        },
-        language: {
-            url: '//cdn.datatables.net/plug-ins/2.3.2/i18n/es-ES.json',
-        },
-        scrollX:true,
-        initComplete: function(json,settings){
-        $(".dt-buttons").removeClass("dt-buttons");
-        //agregar clase para añadir estilos personalizados
-        $(".dt-button").addClass("botones");
-        //elimina la clase de los estilos por defecto de datatables
-        $(".dt-button").addClass("botones");
-    },
-        topStart: {
-        buttons: [
-            {
-                extend: 'copy',
-                text: 'Copiar',
-                className: 'botonCopiar btn' // Added 'btn' class
-            },
-            {
-                extend: 'csv',
-                text: 'exportar CSV',
-                className: 'botonCsv btn' // Added 'btn' class
-            },
-            {
-                extend: 'excel',
-                text: 'exportar Excel',
-                className: 'botonExcel btn' // Added 'btn' class
-            },
-            {
-                extend: 'pdf',
-                text: 'exportar Pdf',
-                className: 'botonPdf btn' // Added 'btn' class
-            },
-            {
-                extend: 'print',
-                text: 'Imprimir',
-                className: 'botonPrint btn' // Added 'btn' class
-            },
-            {
-                extend: 'colvis',
-                text: 'Filtrar',
-                className: 'botonColvis btn' // Added 'btn' class
-            }
-        ]
-    }
-
-
-});
+        });
+    });
 </script>
